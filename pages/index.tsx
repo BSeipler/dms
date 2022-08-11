@@ -7,7 +7,7 @@ const Page: NextPageWithLayout = () => {
 };
 
 Page.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
+  return <Layout active="dashboard">{page}</Layout>;
 };
 
 export default Page;

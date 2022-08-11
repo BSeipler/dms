@@ -3,12 +3,13 @@ import SidebarNav from "./SidebarNav";
 
 type Props = {
   children?: ReactNode;
+  active: string;
 };
 
-export default function Layout({ children }: Props) {
+export default function Layout({ children, active }: Props) {
   return (
     <>
-      <SidebarNav>
+      <SidebarNav active={active}>
         <main>{children}</main>
       </SidebarNav>
     </>
