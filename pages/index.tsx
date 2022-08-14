@@ -7,6 +7,7 @@ import { supabase } from "../utils/supabaseClient";
 import { PostgrestResponse } from "@supabase/supabase-js";
 import { Classroom } from "../types";
 import useClassrooms from "../hooks/useClassrooms";
+import ClassroomSnapshotTable from "../components/tables/ClassroomSnapshotTable";
 
 const Page: NextPageWithLayout = () => {
   const fetchClassrooms = async (): Promise<PostgrestResponse<Classroom>> => {
@@ -30,7 +31,7 @@ const Page: NextPageWithLayout = () => {
   return (
     <>
       <div className="flex flex-wrap">
-        {data?.data?.map((classroom: Classroom) => {
+        {/* {data?.data?.map((classroom: Classroom) => {
           return (
             <ClassroomInfoCard
               classroomId={classroom.id}
@@ -43,7 +44,8 @@ const Page: NextPageWithLayout = () => {
               key={classroom.id}
             />
           );
-        })}
+        })} */}
+        <ClassroomSnapshotTable />
       </div>
     </>
   );
