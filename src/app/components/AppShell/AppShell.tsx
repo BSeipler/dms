@@ -15,61 +15,54 @@ import {
   BuildingOfficeIcon,
   ChartBarIcon,
 } from '@heroicons/react/24/outline';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const navigation = [
   {
     name: 'Dashboard',
-    href: '#',
+    href: '/dashboard',
     icon: ChartBarIcon,
-    current: true,
   },
   {
     name: 'Classrooms',
-    href: '#',
+    href: '/classrooms',
     icon: BuildingOfficeIcon,
-    current: false,
   },
   {
     name: 'Children',
-    href: '#',
+    href: '/children',
     icon: AcademicCapIcon,
-    current: false,
   },
   {
     name: 'Staff',
-    href: '#',
+    href: '/staff',
     icon: UserGroupIcon,
-    current: false,
   },
   {
     name: 'Billing',
-    href: '#',
+    href: '/billing',
     icon: CurrencyDollarIcon,
-    current: false,
   },
   {
     name: 'Staff Scheduling',
-    href: '#',
+    href: '/staff-scheduling',
     icon: CalendarDaysIcon,
-    current: false,
   },
   {
     name: 'Lesson Planning',
-    href: '#',
+    href: '/lesson-planning',
     icon: BookOpenIcon,
-    current: false,
   },
   {
     name: 'Announcements',
-    href: '#',
+    href: '/announcements',
     icon: MegaphoneIcon,
-    current: false,
   },
   {
     name: 'Settings',
-    href: '#',
+    href: '/settings',
     icon: Cog6ToothIcon,
-    current: false,
   },
 ];
 
@@ -83,6 +76,7 @@ interface AppShellProps {
 
 export default function AppShell({ children }: AppShellProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <div>
@@ -141,11 +135,11 @@ export default function AppShell({ children }: AppShellProps) {
                   </div>
                   <nav className="mt-5 space-y-1 px-2">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          item.current
+                          pathname === item.href
                             ? 'bg-indigo-800 text-white'
                             : 'text-white hover:bg-indigo-600 hover:bg-opacity-75',
                           'group flex items-center rounded-md px-2 py-2 text-base font-medium'
@@ -156,7 +150,7 @@ export default function AppShell({ children }: AppShellProps) {
                           aria-hidden="true"
                         />
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </nav>
                 </div>
@@ -202,11 +196,11 @@ export default function AppShell({ children }: AppShellProps) {
             </div>
             <nav className="mt-5 flex-1 space-y-1 px-2">
               {navigation.map((item) => (
-                <a
+                <Link
                   key={item.name}
                   href={item.href}
                   className={classNames(
-                    item.current
+                    pathname === item.href
                       ? 'bg-indigo-800 text-white'
                       : 'text-white hover:bg-indigo-600 hover:bg-opacity-75',
                     'group flex items-center rounded-md px-2 py-2 text-sm font-medium'
@@ -217,7 +211,7 @@ export default function AppShell({ children }: AppShellProps) {
                     aria-hidden="true"
                   />
                   {item.name}
-                </a>
+                </Link>
               ))}
             </nav>
           </div>
@@ -259,9 +253,9 @@ export default function AppShell({ children }: AppShellProps) {
         </div>
         <main className="flex-1">
           <div className="py-6">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
-            </div>
+            {/* <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <h1 className="text-2xl font-semibold text-gray-900">D</h1>
+            </div> */}
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">{children}</div>
           </div>
         </main>
