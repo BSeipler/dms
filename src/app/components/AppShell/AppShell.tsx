@@ -17,6 +17,7 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import SignOutButton from './SignOutButton';
 
 const navigation = [
   {
@@ -154,8 +155,8 @@ export default function AppShell({ children }: AppShellProps) {
                     ))}
                   </nav>
                 </div>
-                <div className="flex flex-shrink-0 border-t border-indigo-800 p-4">
-                  <a href="/" className="group block flex-shrink-0">
+                <div className="flex flex-col flex-shrink-0 border-t border-indigo-800 p-4">
+                  <a href="/" className="group block flex-shrink-0 px-2 py-2">
                     <div className="flex items-center">
                       <div>
                         <img
@@ -172,6 +173,7 @@ export default function AppShell({ children }: AppShellProps) {
                       </div>
                     </div>
                   </a>
+                  <SignOutButton />
                 </div>
               </Dialog.Panel>
             </Transition.Child>
@@ -215,11 +217,11 @@ export default function AppShell({ children }: AppShellProps) {
               ))}
             </nav>
           </div>
-          <div className="flex flex-shrink-0 border-t border-indigo-800 p-4">
+          <div className="flex flex-col flex-shrink-0 border-t border-indigo-800 p-4">
             <a
               href="#
               /"
-              className="group block w-full flex-shrink-0"
+              className="group block w-full flex-shrink-0 px-2 py-2"
             >
               <div className="flex items-center">
                 <div>
@@ -237,6 +239,7 @@ export default function AppShell({ children }: AppShellProps) {
                 </div>
               </div>
             </a>
+            <SignOutButton />
           </div>
         </div>
       </div>

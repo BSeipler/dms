@@ -10,6 +10,7 @@
     "test": "npx playwright test"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.11.13",
     "@headlessui/react": "^1.7.13",
     "@heroicons/react": "^2.0.16",
     "@prisma/client": "^4.11.0",
