@@ -1,7 +1,7 @@
-import './globals.css';
+import '../globals.css';
 import React from 'react';
 import { ClerkProvider } from '@clerk/nextjs/app-beta';
-import AppShell from './components/appShell/AppShell';
+import AppShell from '../components/AppShell';
 
 export const metadata = {
   title: 'Create Next App',
@@ -11,7 +11,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
-      <html lang="en" className="h-full bg-gray-100">
+      <html lang="en" className="h-full bg-white">
         <body className="h-full">
           <AppShell>{children}</AppShell>
         </body>

@@ -10,43 +10,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id             Int       @id @default(autoincrement())
-  firstName      String
-  lastName       String
-  email          String    @unique
-  password       String
-  roleId         Int?
-  role           Role?     @relation(fields: [roleId], references: [id])
-  phoneNumber    String?
-  profilePicture String?
-  creationDate   DateTime  @default(now())
-  lastLogin      DateTime?
-
-  // Relations
-  children       Child[] // Only needed if you want to reference children from the user
-  staffSchedules StaffSchedule[]
-  announcements  Announcement[]
-  evaluations    PerformanceEvaluation[]
-  Organization   Organization?           @relation(fields: [organizationId], references: [id])
-  organizationId Int?
-
-  @@map("Users")
-}
-
 model Classroom {
-  id           Int      @id @default(autoincrement())
-  name         String
-  capacity     Int
-  description  String?
-  creationDate DateTime @default(now())
+  id             Int      @id @default(autoincrement())
+  name           String
+  capacity       Int
+  organizationId String?
+  description    String?
+  creationDate   DateTime @default(now())
 
   // Relations
   children       Child[]
   staffSchedules StaffSchedule[]
   activities     Activity[]
-  Organization   Organization?   @relation(fields: [organizationId], references: [id])
-  organizationId Int?
 
   @@map("Classrooms")
 }
@@ -56,7 +31,7 @@ model Child {
   firstName          String
   lastName           String
   birthDate          DateTime
-  parentId           Int
+  parentId           String
   classroomId        Int
   enrollmentDate     DateTime
   medicalInformation String?
@@ -64,7 +39,6 @@ model Child {
   photo              String?
 
   // Relations
-  parent            User               @relation(fields: [parentId], references: [id])
   classroom         Classroom          @relation(fields: [classroomId], references: [id])
   attendanceRecords Attendance[]
   activities        Activity[]
@@ -79,7 +53,7 @@ model Child {
 
 model StaffSchedule {
   id          Int      @id @default(autoincrement())
-  staffId     Int
+  staffId     String
   classroomId Int
   startTime   DateTime
   endTime     DateTime
@@ -87,7 +61,6 @@ model StaffSchedule {
   role        String
 
   // Relations
-  staff     User      @relation(fields: [staffId], references: [id])
   classroom Classroom @relation(fields: [classroomId], references: [id])
 
   @@map("Staff_Schedule")
@@ -160,11 +133,8 @@ model Announcement {
   id           Int      @id @default(autoincrement())
   title        String
   content      String
-  authorId     Int
+  authorId     String
   creationDate DateTime @default(now())
-
-  // Relations
-  author User @relation(fields: [authorId], references: [id])
 
   @@map("Announcements")
 }
@@ -183,60 +153,21 @@ model Attendance {
 
 model PerformanceEvaluation {
   id      Int      @id @default(autoincrement())
-  staffId Int
+  staffId String
   title   String
   content String
   date    DateTime
   score   Int
 
-  // Relations
-  staff User @relation(fields: [staffId], references: [id])
-
   @@map("Performance_Evaluations")
-}
-
-model Organization {
-  id          Int     @id @default(autoincrement())
-  name        String
-  logo        String?
-  language    String  @default("en")
-  timezone    String  @default("UTC")
-  customTheme String?
-
-  // Relations
-  users       User[]
-  classrooms  Classroom[]
-  Integration Integration[]
-
-  @@map("Organizations")
-}
-
-model Role {
-  id          Int          @id @default(autoincrement())
-  name        String
-  permissions Permission[] @relation("RolePermissions")
-  User        User[]
-
-  @@map("Roles")
-}
-
-model Permission {
-  id    Int    @id @default(autoincrement())
-  name  String
-  roles Role[] @relation("RolePermissions")
-
-  @@map("Permissions")
 }
 
 model Integration {
   id              Int    @id @default(autoincrement())
-  organizationId  Int
+  organizationId  String
   integrationType String
   apiKey          String
   configuration   Json
-
-  // Relations
-  organization Organization @relation(fields: [organizationId], references: [id])
 
   @@map("Integrations")
 }
