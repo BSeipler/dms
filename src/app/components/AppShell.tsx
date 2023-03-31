@@ -20,56 +20,130 @@ import {
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { useUser } from '@clerk/nextjs';
+import { RedirectToSignIn, useUser } from '@clerk/nextjs';
 import { UserButton } from '@clerk/nextjs/app-beta';
 
-const navigation = [
-  {
-    name: 'Dashboard',
-    href: '/dashboard',
-    icon: ChartBarIcon,
-  },
-  {
-    name: 'Classrooms',
-    href: '/classrooms',
-    icon: BuildingOfficeIcon,
-  },
-  {
-    name: 'Children',
-    href: '/children',
-    icon: AcademicCapIcon,
-  },
-  {
-    name: 'Staff',
-    href: '/staff',
-    icon: UserGroupIcon,
-  },
-  {
-    name: 'Billing',
-    href: '/billing',
-    icon: CurrencyDollarIcon,
-  },
-  {
-    name: 'Staff Scheduling',
-    href: '/staff-scheduling',
-    icon: CalendarDaysIcon,
-  },
-  {
-    name: 'Lesson Planning',
-    href: '/lesson-planning',
-    icon: BookOpenIcon,
-  },
-  {
-    name: 'Announcements',
-    href: '/announcements',
-    icon: MegaphoneIcon,
-  },
-  {
-    name: 'Organizations',
-    href: '/organizations',
-    icon: BuildingOffice2Icon,
-  },
-];
+type UserRole = 'admin' | 'staff' | 'parent';
+
+interface NavigationItem {
+  name: string;
+  href: string;
+  icon: React.ElementType;
+}
+
+type NavigationStructure = {
+  // eslint-disable-next-line no-unused-vars
+  [key in UserRole]: NavigationItem[];
+};
+
+const navigation: NavigationStructure = {
+  admin: [
+    {
+      name: 'Dashboard',
+      href: '/dashboard',
+      icon: ChartBarIcon,
+    },
+    {
+      name: 'Classrooms',
+      href: '/classrooms',
+      icon: BuildingOfficeIcon,
+    },
+    {
+      name: 'Children',
+      href: '/children',
+      icon: AcademicCapIcon,
+    },
+    {
+      name: 'Staff',
+      href: '/staff',
+      icon: UserGroupIcon,
+    },
+    {
+      name: 'Billing',
+      href: '/billing',
+      icon: CurrencyDollarIcon,
+    },
+    {
+      name: 'Staff Scheduling',
+      href: '/staff-scheduling',
+      icon: CalendarDaysIcon,
+    },
+    {
+      name: 'Lesson Planning',
+      href: '/lesson-planning',
+      icon: BookOpenIcon,
+    },
+    {
+      name: 'Announcements',
+      href: '/announcements',
+      icon: MegaphoneIcon,
+    },
+    {
+      name: 'Organizations',
+      href: '/organizations',
+      icon: BuildingOffice2Icon,
+    },
+  ],
+  staff: [
+    {
+      name: 'Dashboard',
+      href: '/dashboard',
+      icon: ChartBarIcon,
+    },
+    {
+      name: 'Classrooms',
+      href: '/classrooms',
+      icon: BuildingOfficeIcon,
+    },
+    {
+      name: 'Children',
+      href: '/children',
+      icon: AcademicCapIcon,
+    },
+    {
+      name: 'Staff',
+      href: '/staff',
+      icon: UserGroupIcon,
+    },
+    {
+      name: 'Staff Scheduling',
+      href: '/staff-scheduling',
+      icon: CalendarDaysIcon,
+    },
+    {
+      name: 'Lesson Planning',
+      href: '/lesson-planning',
+      icon: BookOpenIcon,
+    },
+    {
+      name: 'Announcements',
+      href: '/announcements',
+      icon: MegaphoneIcon,
+    },
+  ],
+  parent: [
+    {
+      name: 'Dashboard',
+      href: '/dashboard',
+      icon: ChartBarIcon,
+    },
+    {
+      name: 'Classrooms',
+      href: '/classrooms',
+      icon: BuildingOfficeIcon,
+    },
+    {
+      name: 'Children',
+      href: '/children',
+      icon: AcademicCapIcon,
+    },
+    {
+      name: 'Announcements',
+      href: '/announcements',
+      icon: MegaphoneIcon,
+    },
+  ],
+};
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -84,7 +158,11 @@ export default function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
   const { user } = useUser();
 
-  console.log(user);
+  const userRole = user?.unsafeMetadata.role as UserRole;
+
+  if (!user?.id) {
+    return <RedirectToSignIn />;
+  }
 
   return (
     <div>
@@ -146,7 +224,7 @@ export default function AppShell({ children }: AppShellProps) {
                     <ul className="flex flex-1 flex-col gap-y-7">
                       <li>
                         <ul className="-mx-2 space-y-1">
-                          {navigation.map((item) => (
+                          {navigation[userRole].map((item) => (
                             <li key={item.name}>
                               <Link
                                 href={item.href}
@@ -208,7 +286,7 @@ export default function AppShell({ children }: AppShellProps) {
             <ul className="flex flex-1 flex-col gap-y-7">
               <li>
                 <ul className="-mx-2 space-y-1">
-                  {navigation.map((item) => (
+                  {navigation[userRole].map((item) => (
                     <li key={item.name}>
                       <Link
                         href={item.href}
