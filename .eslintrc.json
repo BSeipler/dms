@@ -9,6 +9,7 @@
     "import/extensions": "off",
     "jsx-a11y/label-has-associated-control": "off",
     "react/jsx-one-expression-per-line": "off",
-    "operator-linebreak": "off"
+    "operator-linebreak": "off",
+    "no-console": "off"
   }
 }
