@@ -133,6 +133,7 @@ model Announcement {
   id           Int      @id @default(autoincrement())
   title        String
   content      String
+  author       String
   authorId     String
   creationDate DateTime @default(now())
 

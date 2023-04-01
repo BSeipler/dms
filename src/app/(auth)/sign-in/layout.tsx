@@ -1,6 +1,9 @@
 import { ClerkProvider } from '@clerk/nextjs/app-beta';
 import '../../globals.css';
 import React from 'react';
+import { Inter } from 'next/font/google';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'Create Next App',
@@ -14,7 +17,7 @@ interface SignInLayoutProps {
 export default function SignUpLayout({ children }: SignInLayoutProps) {
   return (
     <ClerkProvider>
-      <html lang="en" className="h-full bg-gray-50">
+      <html lang="en" className={`${inter.className} h-full bg-white`}>
         <body className="h-full">{children}</body>
       </html>
     </ClerkProvider>
